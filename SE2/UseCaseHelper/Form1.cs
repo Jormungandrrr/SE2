@@ -48,13 +48,13 @@ namespace UseCaseHelper
                         switch (actorcount)
                         {
                             case 1:
-                                ActorList.Add(new Actor(25, 50, actorname, actorcount));
+                                ActorList.Add(new Actor(25, 50, actorname));
                                 break;
                             case 2:
-                                ActorList.Add(new Actor(25, 150, actorname, actorcount));
+                                ActorList.Add(new Actor(25, 150, actorname));
                                 break;
                             case 3:
-                                ActorList.Add(new Actor(25, 250, actorname, actorcount));
+                                ActorList.Add(new Actor(25, 250, actorname));
                                 break;
                             default:
                                 break;
