@@ -123,6 +123,7 @@
             // 
             // tbActoren
             // 
+            this.tbActoren.Enabled = false;
             this.tbActoren.Location = new System.Drawing.Point(93, 81);
             this.tbActoren.Name = "tbActoren";
             this.tbActoren.Size = new System.Drawing.Size(366, 20);

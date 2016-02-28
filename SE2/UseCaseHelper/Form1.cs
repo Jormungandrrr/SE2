@@ -12,37 +12,37 @@ namespace UseCaseHelper
 {
     public partial class Form1 : Form
     {
-        UseCaseProperties UseCase = new UseCaseProperties();
+        UseCaseProperties UseCaseForm = new UseCaseProperties();
         List<Actor> ActorList = new List<Actor>();
+        List<UseCase> UsecaseList = new List<UseCase>();
         private Pen pen = new Pen(Color.FromArgb(255, 0, 0, 0));
+        SolidBrush DrawBrush = new SolidBrush(Color.Black);
         private Graphics grap;
+        Font DrawFont = new Font("Arial", 12);
         private int actorcount = 0;
         public Form1()
         {
             InitializeComponent();
-            UseCase.Enabled = false;  
+            UseCaseForm.Enabled = false;  
         }
         
         private void pbUseCase_Click(object sender, EventArgs e)
         {
             
-            if (UseCase.Enabled == false)
+            if (UseCaseForm.Enabled == false)
             {
-                UseCase.Show();
-                UseCase.Enabled = true;
-                UseCase.Location = new Point(this.Left + this.Width, this.Top);
-                UseCase.Height = this.Height;
+                UseCaseForm.Show();
+                UseCaseForm.Enabled = true;
+                UseCaseForm.Location = new Point(this.Left + this.Width, this.Top);
+                UseCaseForm.Height = this.Height;
                 enableRadioButtons();
             }
             else
             {
                 if ((rbCreate.Checked == true) && (rbActor.Checked == true))
                 {
-                    InputBox inputform = new InputBox("Wat is de naam van de actor?");
-                    inputform.ShowDialog();
-                    string actorname = inputform.Answer;
-
-                    if (ActorList.Count < 3 && actorname != null)
+                    string actorname = input("Wat is de naam van de actor?");
+                    if (ActorList.Count < 3 && actorname != null && actorname != "")
                     {
                         actorcount++;
                         switch (actorcount)
@@ -59,9 +59,8 @@ namespace UseCaseHelper
                             default:
                                 break;
                         }
-                        
-                        drawActor();
-                        
+                        Actor currentActor = ActorList.Find(a => a.Name == actorname);
+                        drawActor(currentActor);
                     }
                 }
             }
@@ -76,24 +75,29 @@ namespace UseCaseHelper
             rbUseCase.Enabled = true;
         }
         
-        private void drawActor()
+        private void drawActor(Actor a)
         {
-            foreach ( Actor a in ActorList)
-            {
-                if (a.Actorcount == ActorList.Count)
-                {
-                    grap = pbUseCase.CreateGraphics();
-                    grap.DrawEllipse(pen, (a.X - 12), (a.Y - 25), 25,25); //head
-                    grap.DrawLine(pen, a.X,a.Y, 25, (a.Y + 25)); // body
-                    grap.DrawLine(pen, a.X,(a.Y + 25), 35, a.Y + 40); //right foot
-                    grap.DrawLine(pen, a.X, (a.Y + 25), 15, a.Y + 40); //left foot
-                    grap.DrawLine(pen, a.X, (a.Y + 15), 35, a.Y); //right hand
-                    grap.DrawLine(pen, a.X, (a.Y + 15), 15, a.Y); //left hand
-                    //grap.DrawRectangle(pen, (a.X - 20), (a.Y - 35), 40, (a.Y + 35));
-                    a.Box = new Rectangle((a.X - 20), (a.Y - 35), 40, (a.Y + 35));
-                }
-            }
-                
+            grap = pbUseCase.CreateGraphics();
+            grap.DrawEllipse(pen, (a.X - 12), (a.Y - 25), 25,25); //head
+            grap.DrawLine(pen, a.X,a.Y, 25, (a.Y + 25)); // body
+            grap.DrawLine(pen, a.X,(a.Y + 25), 35, a.Y + 40); //right foot
+            grap.DrawLine(pen, a.X, (a.Y + 25), 15, a.Y + 40); //left foot
+            grap.DrawLine(pen, a.X, (a.Y + 15), 35, a.Y); //right hand
+            grap.DrawLine(pen, a.X, (a.Y + 15), 15, a.Y); //left hand
+            grap.DrawString(a.Name, DrawFont, DrawBrush, (a.X - 20), (a.Y + 38));
+            //grap.DrawRectangle(pen, (a.X - 20), (a.Y - 35), 43, 90);
+            a.Box = new Rectangle((a.X - 20), (a.Y - 35), 43, 90);
+            
+                    
+        }
+
+        private void DrawCase(UseCase u)
+        {
+            grap = pbUseCase.CreateGraphics();
+            grap.DrawEllipse(pen, (u.x - 75), (u.y - 45), 200, 100);
+            grap.DrawString(u.name, DrawFont, DrawBrush, u.x, u.y);
+            u.box = new Rectangle((u.x - 80), (u.y - 50), 220, 110);
+            //grap.DrawRectangle(pen,(u.x - 80), (u.y - 50), 220, 110);
         }
 
         private void pbUseCase_MouseClick(object sender, MouseEventArgs e)
@@ -106,8 +110,32 @@ namespace UseCaseHelper
                     {
                         MessageBox.Show(a.Name);
                     }
+                }   
+            }
+            if (rbCreate.Checked == true && rbUseCase.Checked ==true)
+            {
+                string UseCaseName = input("Wat is de naam van de usecase?");
+                UsecaseList.Add(new UseCase(UseCaseName,e.X, e.Y));
+                UseCase currentusecase = UsecaseList.Find(u => u.name == UseCaseName);
+                DrawCase(currentusecase);
+            }
+            if (rbSelect.Checked == true && UsecaseList.Count > 0)
+            {
+                foreach (UseCase u in UsecaseList)
+                {
+                    if (u.box.Contains(e.Location))
+                    {
+                        MessageBox.Show(u.name);
+                    }
                 }
             }
+        }
+
+        private string input(string question)
+        {
+            InputBox inputform = new InputBox(question);
+            inputform.ShowDialog();
+            return inputform.Answer;
         }
     }
 }

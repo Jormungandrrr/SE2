@@ -12,21 +12,20 @@ namespace UseCaseHelper
         private string name;
         private int x;
         private int y;
-        private int actorcount;
         private Rectangle box;
-        public Actor(int x, int y, string name, int actorcount)
+        private int actornumber;
+        public Actor(int x, int y, string name, int count)
         {
             this.x = x;
             this.y = y;
             this.name = name;
-            this.actorcount = actorcount;
+            this.actornumber = count;
         }
-
-        public int Actorcount { get { return this.actorcount;}}
         public int X { get { return this.x; } }
         public int Y { get { return this.y; } }
         public Rectangle Box { get { return this.box; } set {  this.box = value; } }
         public string Name { get { return this.name; } }
+        public int Actornumber { get { return this.actornumber; } }
 
 
 
