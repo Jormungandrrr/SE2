@@ -11,7 +11,7 @@ namespace UseCaseHelper
     {
         public string name { get; set; }
         public string summary { get; set; }
-        public List<Actor> Actors { get; set; }
+        private List<Actor> actors = new List<Actor>();
         public string discription { get; set; }
         public string exceptions { get; set; }
         public string result { get; set; }
@@ -27,5 +27,7 @@ namespace UseCaseHelper
             this.y = y;
 
         }
+
+        public List<Actor> Actors { get { return this.actors; } set { this.actors = value;  } }
     }
 }

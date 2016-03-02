@@ -17,11 +17,11 @@ namespace UseCaseHelper
         List<UseCase> UsecaseList = new List<UseCase>();
         private Pen pen = new Pen(Color.FromArgb(255, 0, 0, 0));
         SolidBrush DrawBrush = new SolidBrush(Color.Black);
-        private Graphics grap;
         Font DrawFont = new Font("Arial", 12);
+        private Graphics grap;
         private int actorcount = 0;
-        Point pActor;
-        Point pCase;
+        Actor selectedActor = null;
+        UseCase selectedCase = null;
         public Form1()
         {
             InitializeComponent();
@@ -104,8 +104,7 @@ namespace UseCaseHelper
             u.box = new Rectangle((u.x - 80), (u.y - 50), 220, 110);
             //grap.DrawRectangle(pen,(u.x - 80), (u.y - 50), 220, 110);
         }
-        bool actorSelected = false;
-        bool caseSelected = false;
+
         private void pbUseCase_MouseClick(object sender, MouseEventArgs e)
         {
             #region createUseCase
@@ -121,33 +120,22 @@ namespace UseCaseHelper
             {
                 if (SelectActor(e.Location) != null)
                 {
-                    Actor a = SelectActor(e.Location);
-                    pActor.X = a.X;
-                    pActor.Y = a.Y;
-                    actorSelected = true;
+                    selectedActor = SelectActor(e.Location);
+                    
                 }
-                if (SelectCase(e.Location) != null)
+                else if (SelectCase(e.Location) != null)
                 {
-                    UseCase u = SelectCase(e.Location);
-                    pCase.X = u.x;
-                    pCase.Y = u.y;
-                    caseSelected = true;
+                    selectedCase = SelectCase(e.Location);
+                    
                 }
-                if (actorSelected && caseSelected)
+                if (selectedActor != null && selectedCase != null)
                 {
-                    grap.DrawLine(pen, pActor, pCase);
-                    pCase.X = 0;
-                    pCase.Y = 0;
-                    pActor.Y = 0;
-                    pActor.X = 0;
-                    caseSelected = false;
-                    actorSelected = false;
+                    grap.DrawLine(pen, selectedActor.X,selectedActor.Y, selectedCase.x,selectedCase.y);
+                    selectedCase.Actors.Add(selectedActor);
+                    selectedActor = null; selectedCase = null;
                 }
-                
-
             }
         }
-
         private string input(string question)
         {
             InputBox inputform = new InputBox(question);
