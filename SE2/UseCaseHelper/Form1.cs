@@ -51,7 +51,6 @@ namespace UseCaseHelper
                         actorcount++;
                         switch (actorcount)
                         {
-                            
                             case 1:
                                 ActorList.Add(new Actor(25, 50, actorname));
                                 break;
@@ -66,7 +65,6 @@ namespace UseCaseHelper
                         }
                         #endregion
                         pbUseCase.Invalidate();
-
                     }
                 }
                 #endregion
@@ -107,7 +105,7 @@ namespace UseCaseHelper
                 }
                 if (selectedActor != null && selectedCase != null)
                 {
-                    LineList.Add(new Line((selectedActor.Name + selectedCase.name), selectedActor.X, selectedActor.Y, selectedCase.x, selectedCase.y));
+                    LineList.Add(new Line(selectedActor.X, selectedActor.Y, selectedCase.x, selectedCase.y));
                     pbUseCase.Invalidate();
                     selectedCase.Actors.Add(selectedActor);
                     selectedActor = null; selectedCase = null;
@@ -182,6 +180,14 @@ namespace UseCaseHelper
             {
                 l.Draw(e.Graphics);
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ActorList.Clear();
+            UsecaseList.Clear();
+            LineList.Clear();
+            
         }
     }
 }

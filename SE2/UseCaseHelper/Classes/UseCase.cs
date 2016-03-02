@@ -25,7 +25,6 @@ namespace UseCaseHelper
             this.name = name;
             this.x = x;
             this.y = y;
-
         }
 
         public void Draw(Graphics grap)

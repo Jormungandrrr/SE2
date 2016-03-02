@@ -9,16 +9,14 @@ namespace UseCaseHelper
 {
     class Line
     {
-        private string name;
         private int x1;
         private int y1;
         private int x2;
         private int y2;
 
 
-        public Line(string name, int x1, int y1, int x2, int y2)
+        public Line(int x1, int y1, int x2, int y2)
         {
-            this.name = name;
             this.x1 = x1;
             this.y1 = y1;
             this.x2 = x2;
@@ -30,7 +28,6 @@ namespace UseCaseHelper
             grap.DrawLine(Form1.pen, this.x1, this.y1, this.x2, this.y2);
         }
 
-        public string Name { get { return this.name; } set { this.name = value; } }
         public int X1 { get { return this.X1; } set { this.X1 = value; } }
         public int Y1 { get { return this.y1; } set { this.y1 = value; } }
         public int X2 { get { return this.X2; } set { this.X2 = value; } }
