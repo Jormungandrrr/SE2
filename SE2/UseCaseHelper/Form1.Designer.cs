@@ -136,6 +136,7 @@
             this.pbUseCase.TabIndex = 2;
             this.pbUseCase.TabStop = false;
             this.pbUseCase.Click += new System.EventHandler(this.pbUseCase_Click);
+            this.pbUseCase.Paint += new System.Windows.Forms.PaintEventHandler(this.pbUseCase_Paint);
             this.pbUseCase.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbUseCase_MouseClick);
             // 
             // btnClear

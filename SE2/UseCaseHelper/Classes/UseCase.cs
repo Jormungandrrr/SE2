@@ -28,6 +28,13 @@ namespace UseCaseHelper
 
         }
 
+        public void Draw(Graphics grap)
+        {
+            grap.DrawEllipse(Form1.pen, (this.x - 75), (this.y - 45), 200, 100);
+            grap.DrawString(this.name, Form1.DrawFont, Form1.DrawBrush, this.x, this.y);
+            this.box = new Rectangle((this.x - 80), (this.y - 50), 220, 110);
+        }
+
         public List<Actor> Actors { get { return this.actors; } set { this.actors = value;  } }
     }
 }

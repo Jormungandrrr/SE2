@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Actor.cs" />
+    <Compile Include="Classes\Line.cs" />
     <Compile Include="Classes\UseCase.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
