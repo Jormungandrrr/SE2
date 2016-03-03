@@ -15,6 +15,7 @@ namespace UseCaseHelper
         public string discription { get; set; }
         public string exceptions { get; set; }
         public string result { get; set; }
+        public string aannamen { get; set; }
         public int x { get; private set; }
         public int y { get; private set; }
         public Rectangle box { get; set; }

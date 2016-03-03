@@ -120,6 +120,7 @@
             this.tbSamenvatting.Name = "tbSamenvatting";
             this.tbSamenvatting.Size = new System.Drawing.Size(366, 20);
             this.tbSamenvatting.TabIndex = 8;
+            this.tbSamenvatting.Validating += new System.ComponentModel.CancelEventHandler(this.tbSamenvatting_Validating);
             // 
             // tbActoren
             // 
@@ -135,6 +136,7 @@
             this.tbAannamen.Name = "tbAannamen";
             this.tbAannamen.Size = new System.Drawing.Size(366, 20);
             this.tbAannamen.TabIndex = 10;
+            this.tbAannamen.Validating += new System.ComponentModel.CancelEventHandler(this.tbAannamen_Validating);
             // 
             // rtbBeschrijving
             // 
@@ -143,6 +145,7 @@
             this.rtbBeschrijving.Size = new System.Drawing.Size(366, 117);
             this.rtbBeschrijving.TabIndex = 11;
             this.rtbBeschrijving.Text = "";
+            this.rtbBeschrijving.Validating += new System.ComponentModel.CancelEventHandler(this.rtbBeschrijving_Validating);
             // 
             // rtbUitzonderingen
             // 
@@ -151,6 +154,7 @@
             this.rtbUitzonderingen.Size = new System.Drawing.Size(366, 117);
             this.rtbUitzonderingen.TabIndex = 12;
             this.rtbUitzonderingen.Text = "";
+            this.rtbUitzonderingen.Validating += new System.ComponentModel.CancelEventHandler(this.rtbUitzonderingen_Validating);
             // 
             // tbResultaat
             // 
@@ -158,6 +162,7 @@
             this.tbResultaat.Name = "tbResultaat";
             this.tbResultaat.Size = new System.Drawing.Size(366, 20);
             this.tbResultaat.TabIndex = 13;
+            this.tbResultaat.Validating += new System.ComponentModel.CancelEventHandler(this.tbResultaat_Validating);
             // 
             // UseCaseProperties
             // 
@@ -180,6 +185,7 @@
             this.Controls.Add(this.lbName);
             this.Name = "UseCaseProperties";
             this.Text = "Properties";
+            this.Load += new System.EventHandler(this.UseCaseProperties_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

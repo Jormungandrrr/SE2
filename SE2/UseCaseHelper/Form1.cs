@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,8 @@ namespace UseCaseHelper
 {
     public partial class Form1 : Form
     {
-        UseCaseProperties UseCaseForm = new UseCaseProperties();
         List<Actor> ActorList = new List<Actor>();
-        List<UseCase> UsecaseList = new List<UseCase>();
+        static List<UseCase> UsecaseList = new List<UseCase>();
         List<Line> LineList = new List<Line>();
         public static Pen pen = new Pen(Color.FromArgb(255, 0, 0, 0));
         public static SolidBrush DrawBrush = new SolidBrush(Color.Black);
@@ -25,22 +25,10 @@ namespace UseCaseHelper
         public Form1()
         {
             InitializeComponent();
-            UseCaseForm.Enabled = false;  
         }
         
         private void pbUseCase_Click(object sender, EventArgs e)
         {
-            
-            if (UseCaseForm.Enabled == false)
-            {
-                UseCaseForm.Show();
-                UseCaseForm.Enabled = true;
-                UseCaseForm.Location = new Point(this.Left + this.Width, this.Top);
-                UseCaseForm.Height = this.Height;
-                enableRadioButtons();
-            }
-            else
-            {
                 #region CreateActor
                 if ((rbCreate.Checked == true) && (rbActor.Checked == true))
                 {
@@ -69,16 +57,6 @@ namespace UseCaseHelper
                 }
                 #endregion
             }
-        }
-
-        private void enableRadioButtons()
-        {
-            rbActor.Enabled = true;
-            rbCreate.Enabled = true;
-            rbLine.Enabled = true;
-            rbSelect.Enabled = true;
-            rbUseCase.Enabled = true;
-        }
 
         private void pbUseCase_MouseClick(object sender, MouseEventArgs e)
         {
@@ -105,14 +83,14 @@ namespace UseCaseHelper
                 }
                 if (selectedActor != null && selectedCase != null)
                 {
-                    LineList.Add(new Line(selectedActor.X, selectedActor.Y, selectedCase.x, selectedCase.y));
+                    LineList.Add(new Line(selectedActor,selectedCase));
                     pbUseCase.Invalidate();
                     selectedCase.Actors.Add(selectedActor);
                     selectedActor = null; selectedCase = null;
                 }
             }
             #endregion
-            else if (rbSelect.Checked)
+            else if (rbRename.Checked)
             {
                 if (SelectActor(e.Location) != null)
                 {
@@ -125,6 +103,17 @@ namespace UseCaseHelper
                     UseCase u = (SelectCase(e.Location));
                     u.name = input("Wat is de naam van de Usecase?");
                     pbUseCase.Invalidate();
+                }
+            }
+            else if (rbSelect.Checked)
+            {
+                if (SelectCase(e.Location) != null)
+                {
+                    UseCase u = (SelectCase(e.Location));
+                    UseCaseProperties UseCaseForm = new UseCaseProperties(u);
+                    UseCaseForm.ShowDialog();
+                    UseCaseForm.Location = new Point(this.Left + this.Width, this.Top);
+                    UseCaseForm.Height = this.Height;
                 }
             }
         }
@@ -187,7 +176,13 @@ namespace UseCaseHelper
             ActorList.Clear();
             UsecaseList.Clear();
             LineList.Clear();
-            
+            pbUseCase.Invalidate();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            //Bitmap bm = new Bitmap(pbUseCase.Image);
+            //bm.Save(@"E:\Temp", ImageFormat.Jpeg);
         }
     }
 }
