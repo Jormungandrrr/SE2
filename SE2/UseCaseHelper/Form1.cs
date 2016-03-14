@@ -116,6 +116,14 @@ namespace UseCaseHelper
                     UseCaseForm.Height = this.Height;
                 }
             }
+            else if (rbRemove.Checked)
+            {
+                if (SelectCase(e.Location) != null){ UseCase u = SelectCase(e.Location); UsecaseList.Remove(u); }
+                if (SelectActor(e.Location) != null) { Actor a = SelectActor(e.Location); ActorList.Remove(a);  }
+                LineList.Clear();
+                pbUseCase.Invalidate();
+
+            }
         }
         private string input(string question)
         {
