@@ -153,7 +153,7 @@
             this.pbUseCase.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbUseCase.Location = new System.Drawing.Point(12, 118);
             this.pbUseCase.Name = "pbUseCase";
-            this.pbUseCase.Size = new System.Drawing.Size(598, 355);
+            this.pbUseCase.Size = new System.Drawing.Size(598, 589);
             this.pbUseCase.TabIndex = 2;
             this.pbUseCase.TabStop = false;
             this.pbUseCase.Click += new System.EventHandler(this.pbUseCase_Click);
@@ -186,7 +186,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(622, 480);
+            this.ClientSize = new System.Drawing.Size(622, 719);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.pbUseCase);
