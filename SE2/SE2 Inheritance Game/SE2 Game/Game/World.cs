@@ -11,7 +11,14 @@ namespace SE2_Game.Game
     {
         public Grid Grid { get; private set; }
         public Player Player { get; private set; }
+        public List<Item> ItemList = new List<Item>();
         public List<Enemy> EnemyList = new List<Enemy>();
+        public List<ICarryable> Items = new List<ICarryable>();
+
+        public static int borderSize = 1;
+        public static Pen pen = new Pen(Color.Black, borderSize);
+        public static Font font = new Font("Arial", 8);
+        public static StringFormat stringFormat = new StringFormat();
         public bool GameWon
         {
             get
@@ -76,12 +83,14 @@ namespace SE2_Game.Game
             {
                 this.EnemyList.Add(new Enemy(World.Instance.Grid.FreePosition()));
             }
+            this.ItemList.Add(new Armour(World.Instance.Grid.FreePosition()));
+            this.ItemList.Add(new Armour(World.Instance.Grid.FreePosition()));
+            this.ItemList.Add(new Armour(World.Instance.Grid.FreePosition()));
+            this.ItemList.Add(new Spikes(World.Instance.Grid.FreePosition()));
+            this.ItemList.Add(new HealthPotion(World.Instance.Grid.FreePosition()));
             this.stopwatch.Start();
         }
 
-        /// <summary>
-        /// Trigger an update of the game world.
-        /// </summary>
         public void Update()
         {
             this.Player.Update();
@@ -93,18 +102,90 @@ namespace SE2_Game.Game
                     this.Player.HitPoints -= 5;
                 }
             }
+            foreach (Item i in ItemList)
+            {
+                if (this.Player.Position.Equals(i.Position))
+                {
+                    switch (i.ItemType)
+                    {
+                        case Item.Type.Heal:
+                            this.Player.HitPoints += i.Amount;
+                            ItemList.Remove(i);
+                            break;
+                        case Item.Type.PDamage:
+                            this.Player.HitPoints -= i.Amount;
+                            break;
+                        case Item.Type.Damage:
+                            this.Player.HitPoints -= i.Amount;
+                            ItemList.Remove(i);
+                            break;
+                        case Item.Type.Armour:
+                            if ((GetWeight(Player) + i.Weight) <= Player.backpackSpace)
+                            {
+                                this.Player.Items.Add(i);
+                                ItemList.Remove(i);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    return;
+                }
+                foreach (Enemy e in EnemyList)
+                {
+                    if (e.Position.Equals(i.Position))
+                    {
+                        switch (i.ItemType)
+                        {
+                            case Item.Type.Heal:
+                                e.HitPoints += i.Amount;
+                                ItemList.Remove(i);
+                                break;
+                            case Item.Type.PDamage:
+                                e.HitPoints -= i.Amount;
+                                break;
+                            case Item.Type.Damage:
+                                e.HitPoints -= i.Amount;
+                                ItemList.Remove(i);
+                                break;
+                            case Item.Type.Armour:
+                                if (GetWeight(e) >= e.backpackSpace)
+                                {
+                                    e.Items.Add(i);
+                                    ItemList.Remove(i);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        if (e.hitPoints == 0) { EnemyList.Remove(e); }
+                        return;
+                    }
+                }
+                
+            }
         }
 
-        /// <summary>
-        /// Redraw the game world with the given Graphics object.
-        /// </summary>
-        /// <param name="g"></param>
+        private int GetWeight(Character c)
+        {
+            int weight = 0;
+            foreach (Item i in c.Items)
+            {
+                weight += i.Weight;
+            }
+            return weight;
+        }
+
         public void Draw(Graphics g)
         {
             this.Grid.Draw(g);
             foreach (Enemy e in EnemyList)
             {
                 e.Draw(g);
+            }
+            foreach (Item i in ItemList)
+            {
+                i.Draw(g);
             }
             this.Player.Draw(g);
         }

@@ -1,17 +1,14 @@
 ﻿using System.Drawing;
 using SE2_Game.Game;
-
+using System.Collections.Generic;
 
 namespace SE2_Game.Entity
 {
     public abstract class Character
     {
-        protected const int borderSize = 2;
-        protected Pen pen = new Pen(Color.Black, borderSize);
-        protected Font font = new Font("Arial", 8);
-        protected StringFormat stringFormat = new StringFormat();
         public Point Position { get; set; }
-
+        public int backpackSpace;
+        public List<ICarryable> Items = new List<ICarryable>();
         public int HitPoints
         {
             get

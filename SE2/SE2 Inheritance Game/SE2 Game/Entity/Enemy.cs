@@ -18,19 +18,19 @@ namespace SE2_Game.Entity
             this.HitPoints = 100;
 
             // Make drawn string appear centered in the positioning rectangle.
-            this.stringFormat.Alignment = StringAlignment.Center;
-            this.stringFormat.LineAlignment = StringAlignment.Center;
+            World.stringFormat.Alignment = StringAlignment.Center;
+            World.stringFormat.LineAlignment = StringAlignment.Center;
         }
 
         public override void Draw(Graphics g)
         {
             Rectangle r = new Rectangle(
-            this.Position + new Size(borderSize * 2, borderSize * 2),
-            World.Instance.Grid.CellSize - new Size(borderSize * 4, borderSize * 4));
+            this.Position + new Size(World.borderSize * 2, World.borderSize * 2),
+            World.Instance.Grid.CellSize - new Size(World.borderSize * 4, World.borderSize * 4));
             g.FillEllipse(this.Brush, r);
-            g.DrawEllipse(this.pen, r);
+            g.DrawEllipse(World.pen, r);
             g.DrawString(System.Convert.ToString(this.HitPoints),
-            this.font, Brushes.White, r, this.stringFormat);
+            World.font, Brushes.White, r, World.stringFormat);
         }
         public override void Update()
         {
