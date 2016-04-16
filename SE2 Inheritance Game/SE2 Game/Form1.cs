@@ -10,8 +10,9 @@ namespace SE2_Game
         public Form1()
         {
             InitializeComponent();
-            
-            World.Instance.Create(picGame.Size, new System.Drawing.Size(9, 9), 10);
+            Inputbox InputBox = new Inputbox();
+            InputBox.ShowDialog();
+            World.Instance.Create(picGame.Size, new System.Drawing.Size(9, 9), 10,InputBox.enemieCount);
         }
 
         private void picGame_Paint(object sender, PaintEventArgs e)
@@ -28,22 +29,27 @@ namespace SE2_Game
         {
             // First update the game world, that trigger a refresh on the
             // picturebox so that the new state will be displayed.
-            World.Instance.Update();
-            picGame.Refresh();
-
-            if (World.Instance.GameOver)
+            if (World.Exists)
             {
-                timerAnimation.Enabled = false;
-                MessageBox.Show("Game Over!");
-                this.Close();
-            }
+                World.Instance.Update();
+                picGame.Refresh();
 
-            if (World.Instance.GameWon)
-            {
-                timerAnimation.Enabled = false;
-                MessageBox.Show("Game Won!");
-                this.Close();
+                if (World.Instance.GameOver)
+                {
+                    timerAnimation.Enabled = false;
+                    MessageBox.Show("Game Over!");
+                    this.Close();
+                }
+
+                if (World.Instance.GameWon)
+                {
+                    timerAnimation.Enabled = false;
+                    MessageBox.Show("Game Won!");
+                    this.Close();
+                }
             }
+            else { }
+            
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)

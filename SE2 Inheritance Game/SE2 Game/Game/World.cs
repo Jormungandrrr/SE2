@@ -15,6 +15,7 @@ namespace SE2_Game.Game
         public List<Enemy> EnemyList = new List<Enemy>();
         public List<ICarryable> Items = new List<ICarryable>();
 
+        public static bool Exists = false;
         public static int borderSize = 1;
         public static Pen pen = new Pen(Color.Black, borderSize);
         public static Font font = new Font("Arial", 8);
@@ -73,13 +74,11 @@ namespace SE2_Game.Game
         /// <param name="cellCount">The number of cells (width and height).</param>
         /// <param name="wallProbability">The chance that a cell will become
         /// a wall cell, expressed in a range from 0 to 100.</param>
-        public void Create(Size mapSize, Size cellCount, int wallProbability)
+        public void Create(Size mapSize, Size cellCount, int wallProbability, int enemycount)
         {
             this.Grid = new Grid(mapSize, cellCount, wallProbability);
             this.Player = new Player();
-            Inputbox InputBox = new Inputbox();
-            InputBox.ShowDialog();
-            for (int i = 0; i < InputBox.enemieCount; i++)
+            for (int i = 0; i < enemycount; i++)
             {
                 this.EnemyList.Add(new Enemy(World.Instance.Grid.FreePosition()));
             }
@@ -89,6 +88,7 @@ namespace SE2_Game.Game
             this.ItemList.Add(new Spikes(World.Instance.Grid.FreePosition()));
             this.ItemList.Add(new HealthPotion(World.Instance.Grid.FreePosition()));
             this.stopwatch.Start();
+            Exists = true;
         }
 
         public void Update()
