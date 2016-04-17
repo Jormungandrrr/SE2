@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace SE2_Game.Game.Map
 {
@@ -94,37 +95,46 @@ namespace SE2_Game.Game.Map
             this.cells = new Cell[cellCount.Width * cellCount.Height];
 
             int wordnumber = 0;
-            foreach (string s in map)
+            try
             {
-                string[] words = s.Split(',');
-                List<string> celllist = new List<string>(words);
-                celllist.RemoveAt(celllist.Count - 9);
 
-                foreach (string c in celllist)
+
+                foreach (string s in map)
                 {
-                    Point index = new Point(wordnumber % cellCount.Width, wordnumber / (cellCount.Width));
-                    this.cells[wordnumber] = new Cell(index,
-                    this.CellIndexToPosition(index),
-                    this.CellSize);
-                    switch (c)
+                    string[] words = s.Split(',');
+                    List<string> celllist = new List<string>(words);
+                    celllist.RemoveAt(celllist.Count - 9);
+
+                    foreach (string c in celllist)
                     {
-                        case "Normal":
-                            this.cells[wordnumber].Type = Cell.CellType.Normal;
-                            break;
+                        Point index = new Point(wordnumber % cellCount.Width, wordnumber / (cellCount.Width));
+                        this.cells[wordnumber] = new Cell(index,
+                        this.CellIndexToPosition(index),
+                        this.CellSize);
+                        switch (c)
+                        {
+                            case "Normal":
+                                this.cells[wordnumber].Type = Cell.CellType.Normal;
+                                break;
 
-                        case "Wall":
-                            this.cells[wordnumber].Type = Cell.CellType.Wall;
-                            break;
+                            case "Wall":
+                                this.cells[wordnumber].Type = Cell.CellType.Wall;
+                                break;
 
-                        case "Goal":
-                            this.cells[wordnumber].Type = Cell.CellType.Goal;
-                            break;
+                            case "Goal":
+                                this.cells[wordnumber].Type = Cell.CellType.Goal;
+                                break;
+                        }
+                        wordnumber++;
+
                     }
-                    wordnumber++;
-
                 }
+                this.cells[this.cells.Length - 1].Type = Cell.CellType.Goal;
             }
-            this.cells[this.cells.Length - 1].Type = Cell.CellType.Goal;
+            catch
+            {
+                MessageBox.Show("Ongeldige map");
+            }
         }
 
         /// <summary>
