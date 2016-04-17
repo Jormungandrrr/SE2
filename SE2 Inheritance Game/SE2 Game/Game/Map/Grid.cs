@@ -124,6 +124,7 @@ namespace SE2_Game.Game.Map
 
                 }
             }
+            this.cells[this.cells.Length - 1].Type = Cell.CellType.Goal;
         }
 
         /// <summary>
