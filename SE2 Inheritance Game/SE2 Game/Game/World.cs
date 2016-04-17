@@ -87,9 +87,26 @@ namespace SE2_Game.Game
             this.ItemList.Add(new Armour(World.Instance.Grid.FreePosition()));
             this.ItemList.Add(new Spikes(World.Instance.Grid.FreePosition()));
             this.ItemList.Add(new HealthPotion(World.Instance.Grid.FreePosition()));
-            this.stopwatch.Start();
             Exists = true;
+            this.stopwatch.Start();   
         }
+        public void Create(Size mapSize, int enemycount, List<string> map)
+        {
+            this.Grid = new Grid(map, mapSize);
+            this.Player = new Player();
+            for (int i = 0; i < enemycount; i++)
+            {
+                this.EnemyList.Add(new Enemy(World.Instance.Grid.FreePosition()));
+            }
+            this.ItemList.Add(new Armour(World.Instance.Grid.FreePosition()));
+            this.ItemList.Add(new Armour(World.Instance.Grid.FreePosition()));
+            this.ItemList.Add(new Armour(World.Instance.Grid.FreePosition()));
+            this.ItemList.Add(new Spikes(World.Instance.Grid.FreePosition()));
+            this.ItemList.Add(new HealthPotion(World.Instance.Grid.FreePosition()));
+            Exists = true;
+            this.stopwatch.Start();
+        }
+
 
         public void Update()
         {

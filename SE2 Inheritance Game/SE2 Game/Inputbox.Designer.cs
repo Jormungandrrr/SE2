@@ -31,12 +31,13 @@
             this.BtnValidate = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.nudEnemies = new System.Windows.Forms.NumericUpDown();
+            this.btnLoadMap = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudEnemies)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnValidate
             // 
-            this.BtnValidate.Location = new System.Drawing.Point(148, 71);
+            this.BtnValidate.Location = new System.Drawing.Point(149, 121);
             this.BtnValidate.Name = "BtnValidate";
             this.BtnValidate.Size = new System.Drawing.Size(75, 23);
             this.BtnValidate.TabIndex = 0;
@@ -61,11 +62,22 @@
             this.nudEnemies.Size = new System.Drawing.Size(41, 20);
             this.nudEnemies.TabIndex = 3;
             // 
+            // btnLoadMap
+            // 
+            this.btnLoadMap.Location = new System.Drawing.Point(149, 87);
+            this.btnLoadMap.Name = "btnLoadMap";
+            this.btnLoadMap.Size = new System.Drawing.Size(75, 23);
+            this.btnLoadMap.TabIndex = 4;
+            this.btnLoadMap.Text = "Map inladen";
+            this.btnLoadMap.UseVisualStyleBackColor = true;
+            this.btnLoadMap.Click += new System.EventHandler(this.btnLoadMap_Click);
+            // 
             // Inputbox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 106);
+            this.ClientSize = new System.Drawing.Size(374, 156);
+            this.Controls.Add(this.btnLoadMap);
             this.Controls.Add(this.nudEnemies);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.BtnValidate);
@@ -82,5 +94,6 @@
         private System.Windows.Forms.Button BtnValidate;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown nudEnemies;
+        private System.Windows.Forms.Button btnLoadMap;
     }
 }

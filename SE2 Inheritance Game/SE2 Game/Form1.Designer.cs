@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.picGame = new System.Windows.Forms.PictureBox();
             this.timerAnimation = new System.Windows.Forms.Timer(this.components);
+            this.btnSaveMap = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picGame)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,11 +50,23 @@
             this.timerAnimation.Interval = 33;
             this.timerAnimation.Tick += new System.EventHandler(this.timerAnimation_Tick);
             // 
+            // btnSaveMap
+            // 
+            this.btnSaveMap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveMap.Location = new System.Drawing.Point(215, 318);
+            this.btnSaveMap.Name = "btnSaveMap";
+            this.btnSaveMap.Size = new System.Drawing.Size(88, 23);
+            this.btnSaveMap.TabIndex = 1;
+            this.btnSaveMap.Text = "Map Opslaan";
+            this.btnSaveMap.UseVisualStyleBackColor = true;
+            this.btnSaveMap.Click += new System.EventHandler(this.btnSaveMap_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(325, 323);
+            this.ClientSize = new System.Drawing.Size(325, 348);
+            this.Controls.Add(this.btnSaveMap);
             this.Controls.Add(this.picGame);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
@@ -65,9 +78,9 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox picGame;
         private System.Windows.Forms.Timer timerAnimation;
+        private System.Windows.Forms.Button btnSaveMap;
+        public  System.Windows.Forms.PictureBox picGame;
     }
 }
 

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 using SE2_Game.Game;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Drawing;
 
 namespace SE2_Game
 {
@@ -12,7 +15,16 @@ namespace SE2_Game
             InitializeComponent();
             Inputbox InputBox = new Inputbox();
             InputBox.ShowDialog();
-            World.Instance.Create(picGame.Size, new System.Drawing.Size(9, 9), 10,InputBox.enemieCount);
+            if (InputBox.Loadmap)
+            {
+                World.Instance.Create(picGame.Size, InputBox.enemieCount,InputBox.Content);
+            }
+            else
+            {
+                World.Instance.Create(picGame.Size, new System.Drawing.Size(9, 9), 10, InputBox.enemieCount);
+
+            }
+
         }
 
         private void picGame_Paint(object sender, PaintEventArgs e)
@@ -55,6 +67,25 @@ namespace SE2_Game
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             World.Instance.Player.Interaction(e.KeyCode);
+        }
+        private void btnSaveMap_Click(object sender, EventArgs e)
+        {
+            int count = 1;
+            string filename = "Map";
+            while (File.Exists(filename + ".txt"))
+            {
+                filename = "Map" + count;
+                count++;
+            }
+
+
+            using (StreamWriter sw = new StreamWriter(filename +".txt"))
+            {
+                foreach (String s in World.Instance.Grid.MapLayout())
+                {
+                    sw.WriteLine(s);
+                }    
+            }
         }
     }
 }

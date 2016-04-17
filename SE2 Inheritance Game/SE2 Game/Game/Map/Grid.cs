@@ -1,12 +1,13 @@
 ﻿using System.Drawing;
+using System.Collections.Generic;
 
 namespace SE2_Game.Game.Map
 {
     public class Grid
     {
-        private readonly Size gridSize;
-        private readonly Size cellSize;
-        private readonly Size cellCount;
+        private Size gridSize;
+        private Size cellSize;
+        private Size cellCount;
         private Cell[] cells;
 
         /// <summary>
@@ -21,7 +22,6 @@ namespace SE2_Game.Game.Map
         /// The number of horizontal and vertical cells.
         /// </summary>
         public Size CellCount { get { return this.cellCount; } }
-
         /// <summary>
         /// Gives the position of the goal cell.
         /// </summary>
@@ -37,8 +37,16 @@ namespace SE2_Game.Game.Map
                     }
                 }
 
-                // Should never happen! Maybe use a custom exception...?
-                return new Point(-1, -1);
+                try
+                {
+                    return new Point(-1, -1);
+                }
+                catch (System.Exception)
+                {
+
+                    throw;
+                }
+                
             }
         }
 
@@ -76,6 +84,48 @@ namespace SE2_Game.Game.Map
             this.cells[this.cells.Length - 1].Type = Cell.CellType.Goal;
         }
 
+        public Grid(List<string> map, Size gridSize)
+        {
+            this.gridSize = gridSize;
+            this.cellCount.Height = map.Count;
+            string[] wordslength = map[0].Split(',');
+            this.cellCount.Width = wordslength.Length -1;
+            this.cellSize = new Size(gridSize.Width / cellCount.Width,gridSize.Height / cellCount.Height);
+            this.cells = new Cell[cellCount.Width * cellCount.Height];
+
+            int wordnumber = 0;
+            foreach (string s in map)
+            {
+                string[] words = s.Split(',');
+                List<string> celllist = new List<string>(words);
+                celllist.RemoveAt(celllist.Count - 9);
+
+                foreach (string c in celllist)
+                {
+                    Point index = new Point(wordnumber % cellCount.Width, wordnumber / (cellCount.Width));
+                    this.cells[wordnumber] = new Cell(index,
+                    this.CellIndexToPosition(index),
+                    this.CellSize);
+                    switch (c)
+                    {
+                        case "Normal":
+                            this.cells[wordnumber].Type = Cell.CellType.Normal;
+                            break;
+
+                        case "Wall":
+                            this.cells[wordnumber].Type = Cell.CellType.Wall;
+                            break;
+
+                        case "Goal":
+                            this.cells[wordnumber].Type = Cell.CellType.Goal;
+                            break;
+                    }
+                    wordnumber++;
+
+                }
+            }
+        }
+
         /// <summary>
         /// Draw the current grid on the screen.
         /// </summary>
@@ -110,9 +160,9 @@ namespace SE2_Game.Game.Map
 
         public Cell.CellType CellTypeAtPosition(Point position)
         {
-            Point index = this.PositionToCellIndex(position);
-            int arrayIndex = (index.Y * this.cellCount.Width) + index.X;
-            return this.cells[arrayIndex].Type;
+                Point index = this.PositionToCellIndex(position);
+                int arrayIndex = (index.Y * (this.cellCount.Width)) + index.X;
+                return this.cells[arrayIndex].Type;
         }
 
         /// <summary>
@@ -137,6 +187,25 @@ namespace SE2_Game.Game.Map
         {
             return new Point(index.X * this.CellSize.Width,
                              index.Y * this.CellSize.Height);
+        }
+
+        public List<string> MapLayout()
+        {
+            int count = 0;
+            string row = "";
+            List<string> content = new List<string>();
+            foreach (Cell cell in this.cells)
+            {
+                if (count >= this.CellCount.Width)
+                {
+                    content.Add(row);
+                    row = "";
+                    count = 0;
+                }
+                row += cell.Type + ",";
+                count++;
+            }
+            return content;
         }
     }
 }
